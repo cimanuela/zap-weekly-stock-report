@@ -1,0 +1,44 @@
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        .header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background-color: #f2f2f2; padding: 10px; text-align: left; border: 1px solid #ddd; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        .footer { text-align: center; font-size: 12px; color: #666; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Weekly Stock Report</h1>
+        <p>Inventory summary for week of {{DATE}}</p>
+    </div>
+    <div class="content">
+        <p>Dear Ordering Team,</p>
+        <p>Here is your weekly inventory summary for items below reorder point (50 units):</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Current Qty</th>
+                    <th>Reorder Point</th>
+                    <th>Days Supply</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{PRODUCT_ROWS}}
+            </tbody>
+        </table>
+        <p><strong>ACTION REQUIRED:</strong> Review items and place orders.</p>
+        <div class="footer">
+            <p>Report generated: {{TIMESTAMP}}</p>
+            <p>System: Zapier Weekly Inventory Automation</p>
+        </div>
+    </div>
+</body>
+</html>
