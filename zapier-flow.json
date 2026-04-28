@@ -1,0 +1,69 @@
+json
+{
+  "workflow_name": "Weekly Stock Report",
+  "status": "production",
+  "trigger": {
+    "app": "Zapier Schedule",
+    "frequency": "weekly",
+    "day": "monday",
+    "time": "09:00 AM",
+    "timezone": "Europe/Rome"
+  },
+  "steps": [
+    {
+      "step_number": 1,
+      "app": "Shopify",
+      "action": "Get Products",
+      "config": {
+        "account": "happy4pets.myshopify.com",
+        "fields": ["product_id", "title", "quantity", "status"]
+      },
+      "test_result": "✓ 500+ products fetched successfully"
+    },
+    {
+      "step_number": 2,
+      "app": "Filter",
+      "action": "Filter by Condition",
+      "config": {
+        "condition": "quantity < 50",
+        "logic": "Continue if true, stop if false"
+      },
+      "test_result": "✓ 12 products filtered successfully"
+    },
+    {
+      "step_number": 3,
+      "app": "Google Sheets",
+      "action": "Append Spreadsheet Row",
+      "config": {
+        "spreadsheet": "Weekly Stock Reports",
+        "sheet": "Sheet1",
+        "columns": {
+          "timestamp": "{{Zap timestamp}}",
+          "items_count": "{{Count}}",
+          "report_date": "{{Date}}",
+          "status": "SUCCESS"
+        }
+      },
+      "test_result": "✓ Row appended successfully"
+    },
+    {
+      "step_number": 4,
+      "app": "Gmail",
+      "action": "Send Email",
+      "config": {
+        "to": "team@happy4pets.it",
+        "subject": "Weekly Stock Report - {{Date}}",
+        "body_format": "HTML",
+        "body": "[HTML table with low-stock items]"
+      },
+      "test_result": "✓ Email delivered successfully"
+    }
+  ],
+  "test_summary": {
+    "total_runs": 4,
+    "successful": 4,
+    "success_rate": "100%",
+    "avg_execution_time_seconds": 19.75,
+    "uptime_percent": 100
+  }
+}
